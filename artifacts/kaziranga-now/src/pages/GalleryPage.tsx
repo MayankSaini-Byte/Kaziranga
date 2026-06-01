@@ -621,7 +621,7 @@ export default function GalleryPage() {
                   {/* Stats Bar */}
                   <div className="flex justify-center gap-6 mb-16 flex-wrap">
                     <div className="border-4 border-black bg-white px-6 py-3 shadow-[6px_6px_0_0_#000] font-black uppercase text-base md:text-lg">
-                      📂 {groupedRegions.length} Folders
+                      📂 {groupedRegions.length} Regions
                     </div>
                     <div className="border-4 border-black bg-[#ffc900] px-6 py-3 shadow-[6px_6px_0_0_#000] font-black uppercase text-base md:text-lg">
                       ⚡ {meetups.length} Archives
