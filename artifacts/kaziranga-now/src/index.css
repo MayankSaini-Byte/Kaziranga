@@ -1706,3 +1706,35 @@ section + section::before {
   -webkit-backface-visibility: hidden;
 }
 
+/* ─── Hero Section Custom Refining Styles ─── */
+.hero-title-main {
+  background: linear-gradient(to bottom, #0d2b1a 20%, #1b5e3a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.6)) drop-shadow(0 4px 12px rgba(13, 43, 26, 0.15));
+}
+
+.hero-title-underline {
+  background: linear-gradient(90deg, transparent, #103820, transparent);
+  box-shadow: 0 0 8px rgba(16, 56, 32, 0.4);
+}
+
+.hero-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  color: #103820;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
+}
+
+@media (min-width: 768px) {
+  .hero-subtitle {
+    font-size: 1.125rem;
+    letter-spacing: 0.5em;
+  }
+}
+

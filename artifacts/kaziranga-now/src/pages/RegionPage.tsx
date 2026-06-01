@@ -77,59 +77,87 @@ function BrutalistFooter() {
 function MeetupCard({ meetup, index }: { meetup: MeetupData; index: number }) {
   const color = CARD_COLORS[index % CARD_COLORS.length];
   const isDarkColor = color.includes("text-white");
+  const isInstagramLink = !!meetup.instagramPost;
   
-  return (
-    <Link href={`/gallery/meetups/${encodeURIComponent(meetup.region.toLowerCase())}/${meetup.id}`}>
-      <motion.div
-        initial={{ opacity: 0, y: 40, scale: 0.96 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.45, delay: Math.min(index * 0.05, 0.35) }}
-        whileHover={{ scale: 1.025, y: -6 }}
-        className="border-4 border-black bg-white shadow-[8px_8px_0_0_#000] hover:shadow-[14px_14px_0_0_#000] transition-all duration-200 cursor-pointer flex flex-col overflow-hidden h-full"
-      >
-        {/* Window Chrome */}
-        <div className="w-full h-8 border-b-4 border-black bg-[#f4f0e6] flex items-center justify-between px-3 shrink-0 select-none">
-          <div className="flex gap-2">
-            <div className="w-3 h-3 rounded-full border-2 border-black bg-[#ff5757]"></div>
-            <div className="w-3 h-3 rounded-full border-2 border-black bg-[#ffc900]"></div>
-            <div className="w-3 h-3 rounded-full border-2 border-black bg-[#6fcf97]"></div>
-          </div>
-          <span className="font-black text-[9px] uppercase text-black/40">ARCHIVE_REC</span>
+  const cardContent = (
+    <motion.div
+      initial={{ opacity: 0, y: 40, scale: 0.96 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.45, delay: Math.min(index * 0.05, 0.35) }}
+      whileHover={isInstagramLink ? { scale: 1.025, y: -6 } : undefined}
+      className={`border-4 border-black bg-white flex flex-col overflow-hidden h-full group ${
+        isInstagramLink
+          ? "shadow-[8px_8px_0_0_#000] hover:shadow-[14px_14px_0_0_#000] transition-all duration-200 cursor-pointer"
+          : "shadow-[4px_4px_0_0_#000] cursor-default"
+      }`}
+    >
+      {/* Window Chrome */}
+      <div className="w-full h-8 border-b-4 border-black bg-[#f4f0e6] flex items-center justify-between px-3 shrink-0 select-none">
+        <div className="flex gap-2">
+          <div className="w-3 h-3 rounded-full border-2 border-black bg-[#ff5757]"></div>
+          <div className="w-3 h-3 rounded-full border-2 border-black bg-[#ffc900]"></div>
+          <div className="w-3 h-3 rounded-full border-2 border-black bg-[#6fcf97]"></div>
         </div>
+        <span className="font-black text-[9px] uppercase text-black/40">
+          {isInstagramLink ? "ARCHIVE_REC" : "UPCOMING_REC"}
+        </span>
+      </div>
 
-        {/* Thumbnail */}
-        <div className="relative w-full aspect-[16/10] bg-[#f4f0e6] overflow-hidden border-b-4 border-black">
-          <img
-            src={meetup.coverImage}
-            alt={meetup.venue}
-            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-            loading="lazy"
-          />
-        </div>
+      {/* Thumbnail */}
+      <div className={`relative w-full aspect-[4/5] bg-[#f4f0e6] overflow-hidden border-b-4 border-black ${!isInstagramLink && "filter grayscale-[40%] contrast-[90%]"}`}>
+        <img
+          src={meetup.coverImage}
+          alt={meetup.venue}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+        />
+        {!isInstagramLink && (
+          <div className="absolute inset-0 bg-black/5 flex items-center justify-center pointer-events-none" />
+        )}
+      </div>
 
-        {/* Details Panel */}
-        <div className={`p-4 flex-grow flex flex-col justify-between ${color}`}>
-          <div>
-            <h3 className={`font-black text-xl uppercase tracking-tight mb-2 line-clamp-2 ${isDarkColor ? 'text-white' : 'text-black'}`}>
-              {meetup.venue}
-            </h3>
+      {/* Details Panel */}
+      <div className={`p-4 flex-grow flex flex-col justify-between ${color} ${!isInstagramLink && "opacity-90"}`}>
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <span className={`font-black text-[9px] uppercase border-2 ${isDarkColor ? 'border-white text-white' : 'border-black text-black'} px-2 py-0.5 bg-white/20 shrink-0`}>
+              {meetup.region}
+            </span>
             <p className={`font-bold text-xs uppercase ${isDarkColor ? 'text-white/60' : 'text-black/60'}`}>
               📅 {meetup.date}
             </p>
           </div>
-          
-          <div className="mt-6 pt-3 border-t border-black/10 flex items-center justify-between">
-            <span className={`font-black text-[9px] uppercase border-2 ${isDarkColor ? 'border-white text-white' : 'border-black text-black'} px-2 py-0.5 bg-white/20`}>
-              {meetup.region}
-            </span>
-            <span className={`font-black text-xs uppercase flex items-center gap-1 ${isDarkColor ? 'text-white' : 'text-black'}`}>
-              VIEW ARCHIVE <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
-            </span>
-          </div>
+          <h3 className={`font-black text-xl uppercase tracking-tight mb-4 line-clamp-2 ${isDarkColor ? 'text-white' : 'text-black'}`}>
+            {meetup.venue}
+          </h3>
         </div>
-      </motion.div>
-    </Link>
+        
+        <div className="pt-3 border-t border-black/10">
+          {isInstagramLink ? (
+            <div className="w-full flex items-center justify-center gap-2 py-2 border-2 border-black bg-[#ff90e8] text-black font-black uppercase text-xs shadow-[3px_3px_0_0_#000] group-hover:shadow-none group-hover:translate-x-[2px] group-hover:translate-y-[2px] transition-all">
+              <FaInstagram size={16} />
+              <span>VIEW ON INSTAGRAM</span>
+            </div>
+          ) : (
+            <div className="w-full flex items-center justify-center gap-2 py-2 border-2 border-black bg-[#ff90e8]/40 text-black/40 font-black uppercase text-xs shadow-[1.5px_1.5px_0_0_rgba(0,0,0,0.2)] cursor-not-allowed select-none">
+              <FaInstagram size={16} />
+              <span>YET TO UPLOAD</span>
+            </div>
+          )}
+        </div>
+      </div>
+    </motion.div>
   );
+
+  if (isInstagramLink) {
+    return (
+      <a href={meetup.instagramPost} target="_blank" rel="noopener noreferrer" className="block h-full">
+        {cardContent}
+      </a>
+    );
+  }
+
+  return cardContent;
 }
 
 // ─── Main Region Page ─────────────────────────────────────────────────────────

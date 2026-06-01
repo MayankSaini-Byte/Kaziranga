@@ -278,8 +278,11 @@ export default function MeetupDetailPage(props: { params?: { region?: string; me
                     </div>
                   ) : (
                     <div className="mt-8 pt-6 border-t-2 border-black/15 relative z-10">
-                      <div className="w-full flex items-center justify-center gap-3 py-3.5 border-4 border-dashed border-black/30 text-black/40 font-bold uppercase text-xs select-none">
-                        <span>No Instagram Link available</span>
+                      <div 
+                        className="w-full flex items-center justify-center gap-3 py-3.5 border-4 border-black bg-[#ff90e8]/50 text-black/50 font-black uppercase shadow-[4px_4px_0_0_#000] cursor-not-allowed select-none"
+                      >
+                        <FaInstagram size={22} />
+                        <span>YET TO UPLOAD</span>
                       </div>
                     </div>
                   )}

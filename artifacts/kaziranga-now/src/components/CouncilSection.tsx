@@ -24,11 +24,32 @@ interface CouncilMember {
   phone: string;
   email: string;
   imageUrl: string;
+  color?: string;
+}
+
+function getMemberColor(colorStr?: string): string {
+  if (!colorStr) return "";
+  const cleaned = colorStr.trim().toLowerCase();
+  if (cleaned === "blue" || cleaned === "#38bdf8") {
+    return "#3359ff";
+  }
+  return colorStr.trim();
+}
+
+function hexToRgba(hex: string, alpha: number): string {
+  if (!hex || !hex.startsWith("#") || hex.length !== 7) {
+    return `rgba(255, 255, 255, ${alpha})`;
+  }
+  const r = parseInt(hex.substring(1, 3), 16);
+  const g = parseInt(hex.substring(3, 5), 16);
+  const b = parseInt(hex.substring(5, 7), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
 function mapRow(row: CouncilRow, index: number): CouncilMember | null {
   const name = row.Name?.trim();
   if (!name) return null;
+  const rawColor = row.Color || (row as any).color || "";
   return {
     id: `council-${index}`,
     name,
@@ -38,6 +59,7 @@ function mapRow(row: CouncilRow, index: number): CouncilMember | null {
     phone: (row.Phone || (row as any)[" Phone"] || (row as any)["Phone "] || "")?.trim(),
     email: (row.Email || (row as any)[" Email"] || (row as any)["Email "] || "")?.trim(),
     imageUrl: row["Image URL"]?.trim() || "",
+    color: getMemberColor(rawColor) || undefined
   };
 }
 
@@ -70,23 +92,34 @@ function CouncilCard({
   let borderClass = "border-white/10 shadow-[0_0_15px_rgba(255,255,255,0.05)]";
   let glowColor = "rgba(255,255,255,0.02)";
   let roleColor = "text-[#6fcf97]";
+  let customStyle: React.CSSProperties = {};
 
-  if (role.includes("house secretary") || role === "house secretary") {
-    borderClass = "border-red-600 shadow-[0_0_20px_rgba(239,68,68,0.4)]";
-    glowColor = "rgba(239,68,68,0.12)";
-    roleColor = "text-red-400 font-bold";
-  } else if (role.includes("deputy secretary") || role === "deputy secretary" || role.includes("deputy")) {
-    borderClass = "border-yellow-500 shadow-[0_0_20px_rgba(234,179,8,0.4)]";
-    glowColor = "rgba(234,179,8,0.12)";
-    roleColor = "text-yellow-400 font-bold";
-  } else if (role.includes("web admin") || role === "web admin" || role.includes("admin")) {
-    borderClass = "border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.4)]";
-    glowColor = "rgba(59,130,246,0.12)";
-    roleColor = "text-blue-400 font-bold";
+  if (member.color) {
+    borderClass = ""; // Clear standard border classes
+    const shadowColor = hexToRgba(member.color, 0.4);
+    customStyle = {
+      borderColor: member.color,
+      boxShadow: `0 0 20px ${shadowColor}`,
+    };
+    glowColor = hexToRgba(member.color, 0.12);
   } else {
-    borderClass = "border-[#1e5631]/50 shadow-[0_0_15px_rgba(30,86,49,0.15)]";
-    glowColor = "rgba(30,86,49,0.06)";
-    roleColor = "text-[#6fcf97]";
+    if (role.includes("house secretary") || role === "house secretary") {
+      borderClass = "border-red-600 shadow-[0_0_20px_rgba(239,68,68,0.4)]";
+      glowColor = "rgba(239,68,68,0.12)";
+      roleColor = "text-red-400 font-bold";
+    } else if (role.includes("deputy secretary") || role === "deputy secretary" || role.includes("deputy")) {
+      borderClass = "border-yellow-500 shadow-[0_0_20px_rgba(234,179,8,0.4)]";
+      glowColor = "rgba(234,179,8,0.12)";
+      roleColor = "text-yellow-400 font-bold";
+    } else if (role.includes("web admin") || role === "web admin" || role.includes("admin")) {
+      borderClass = "border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.4)]";
+      glowColor = "rgba(59,130,246,0.12)";
+      roleColor = "text-blue-400 font-bold";
+    } else {
+      borderClass = "border-[#1e5631]/50 shadow-[0_0_15px_rgba(30,86,49,0.15)]";
+      glowColor = "rgba(30,86,49,0.06)";
+      roleColor = "text-[#6fcf97]";
+    }
   }
 
   const isDimmed = isAnyHovered && !isHovered;
@@ -118,6 +151,7 @@ function CouncilCard({
       >
       <div
         className={`absolute inset-0 w-full h-full rounded-[24px] border-[3px] ${borderClass} overflow-hidden bg-[#060c08] flex flex-col justify-between select-none z-10`}
+        style={customStyle}
       >
         {/* Distorted SVG Grid Background */}
         <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
@@ -211,23 +245,34 @@ function ShowcaseCard({
   let borderClass = "border-white/10 shadow-[0_0_20px_rgba(255,255,255,0.05)]";
   let glowColor = "rgba(255,255,255,0.02)";
   let roleColor = "text-[#6fcf97]";
+  let customStyle: React.CSSProperties = {};
 
-  if (role.includes("house secretary") || role === "house secretary") {
-    borderClass = "border-red-600 shadow-[0_0_30px_rgba(239,68,68,0.5)]";
-    glowColor = "rgba(239,68,68,0.15)";
-    roleColor = "text-red-400 font-bold";
-  } else if (role.includes("deputy secretary") || role === "deputy secretary" || role.includes("deputy")) {
-    borderClass = "border-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.5)]";
-    glowColor = "rgba(234,179,8,0.15)";
-    roleColor = "text-yellow-400 font-bold";
-  } else if (role.includes("web admin") || role === "web admin" || role.includes("admin")) {
-    borderClass = "border-blue-500 shadow-[0_0_30px_rgba(59,130,246,0.5)]";
-    glowColor = "rgba(59,130,246,0.15)";
-    roleColor = "text-blue-400 font-bold";
+  if (member.color) {
+    borderClass = ""; // Clear standard border classes
+    const shadowColor = hexToRgba(member.color, 0.5);
+    customStyle = {
+      borderColor: member.color,
+      boxShadow: `0 0 30px ${shadowColor}`,
+    };
+    glowColor = hexToRgba(member.color, 0.15);
   } else {
-    borderClass = "border-[#1e5631] shadow-[0_0_25px_rgba(30,86,49,0.25)]";
-    glowColor = "rgba(30,86,49,0.08)";
-    roleColor = "text-[#6fcf97]";
+    if (role.includes("house secretary") || role === "house secretary") {
+      borderClass = "border-red-600 shadow-[0_0_30px_rgba(239,68,68,0.5)]";
+      glowColor = "rgba(239,68,68,0.15)";
+      roleColor = "text-red-400 font-bold";
+    } else if (role.includes("deputy secretary") || role === "deputy secretary" || role.includes("deputy")) {
+      borderClass = "border-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.5)]";
+      glowColor = "rgba(234,179,8,0.15)";
+      roleColor = "text-yellow-400 font-bold";
+    } else if (role.includes("web admin") || role === "web admin" || role.includes("admin")) {
+      borderClass = "border-blue-500 shadow-[0_0_30px_rgba(59,130,246,0.5)]";
+      glowColor = "rgba(59,130,246,0.15)";
+      roleColor = "text-blue-400 font-bold";
+    } else {
+      borderClass = "border-[#1e5631] shadow-[0_0_25px_rgba(30,86,49,0.25)]";
+      glowColor = "rgba(30,86,49,0.08)";
+      roleColor = "text-[#6fcf97]";
+    }
   }
 
   return (
@@ -244,7 +289,8 @@ function ShowcaseCard({
           className={`absolute inset-0 w-full h-full rounded-[24px] border-[3px] ${borderClass} overflow-hidden bg-[#060c08] flex flex-col justify-between select-none z-10`}
           style={{
             backfaceVisibility: "hidden",
-            WebkitBackfaceVisibility: "hidden"
+            WebkitBackfaceVisibility: "hidden",
+            ...customStyle
           }}
         >
           {/* Grid Background */}
@@ -302,7 +348,8 @@ function ShowcaseCard({
           style={{
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
-            transform: "rotateY(180deg)"
+            transform: "rotateY(180deg)",
+            ...customStyle
           }}
         >
           <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at center, rgba(16,185,129,0.3) 0%, transparent 70%)" }} />
@@ -318,7 +365,12 @@ function ShowcaseCard({
           <div className="relative z-10 space-y-4 w-full flex flex-col items-center justify-center">
             <div className="space-y-1 w-full text-center">
               <h3 className="text-xl font-bold text-white tracking-wide font-sans truncate">{member.name}</h3>
-              <div className={`text-xs font-serif uppercase tracking-wider ${roleColor} truncate`}>{member.stage}</div>
+              <div 
+                className={`text-xs font-serif uppercase tracking-wider truncate ${member.color ? "" : roleColor}`}
+                style={member.color ? { color: member.color, fontWeight: "bold" } : undefined}
+              >
+                {member.stage}
+              </div>
             </div>
 
             <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent my-1" />

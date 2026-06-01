@@ -28,6 +28,8 @@ export interface MeetupRow {
   Region: string;
   "Instagram Post": string;
   "Host's ID": string;
+  Poster?: string;
+  Images?: string;
 }
 
 export interface MeetupData {
@@ -78,6 +80,7 @@ export interface CouncilRow {
   Phone: string;
   Email: string;
   "Image URL": string;
+  Color?: string;
 }
 
 export interface AarohanRow {
@@ -205,20 +208,60 @@ function getDeterministicGallery(str: string, count: number): string[] {
 }
 
 export async function fetchMeetups(): Promise<MeetupData[]> {
-  const rows = await fetchCSV<MeetupRow>(MEETUPS_CSV_URL);
+  const rows = await fetchCSV<any>(MEETUPS_CSV_URL);
   
   return rows
-    .filter(row => row.Venue && row.Region && row.Date)
+    .filter(row => {
+      const getVal = (keyName: string) => {
+        const foundKey = Object.keys(row).find(k => k.trim().replace(/^["']|["']$/g, '').toLowerCase() === keyName.toLowerCase());
+        return foundKey ? (row[foundKey] || "").trim() : "";
+      };
+      return getVal("Venue") && getVal("Region") && getVal("Date");
+    })
     .map((row) => {
-      const region = row.Region.trim();
-      const venue = row.Venue.trim();
-      const date = row.Date.trim();
-      const hostId = (row["Host's ID"] || "").trim();
-      const instagramPost = (row["Instagram Post"] || "").trim();
+      const getVal = (keyName: string) => {
+        const foundKey = Object.keys(row).find(k => k.trim().replace(/^["']|["']$/g, '').toLowerCase() === keyName.toLowerCase());
+        return foundKey ? (row[foundKey] || "").trim() : "";
+      };
+
+      const region = getVal("Region");
+      const venue = getVal("Venue");
+      const date = getVal("Date");
+      const hostId = getVal("Host's ID");
+      const instagramPost = getVal("Instagram Post");
+      const poster = getVal("Poster");
+      const imagesRaw = getVal("Images");
       
       const id = slugify(venue);
-      const coverImage = MEETUPS_IMAGES[getDeterministicIndex(id, MEETUPS_IMAGES.length)];
-      const gallery = getDeterministicGallery(id, 6);
+      
+      let coverImage = "";
+      if (poster) {
+        coverImage = toDirectImageUrl(poster);
+      }
+      
+      let gallery: string[] = [];
+      if (imagesRaw) {
+        let parts = imagesRaw.split(/[,\n;]+/);
+        if (parts.length === 1 && parts[0].trim().includes(" ")) {
+          parts = parts[0].trim().split(/\s+/);
+        }
+        gallery = parts
+          .map((url: string) => toDirectImageUrl(url.trim()))
+          .filter((url: string) => url !== "");
+      }
+      
+      // Fallbacks
+      if (!coverImage) {
+        if (gallery.length > 0) {
+          coverImage = gallery[0];
+        } else {
+          coverImage = MEETUPS_IMAGES[getDeterministicIndex(id, MEETUPS_IMAGES.length)];
+        }
+      }
+      
+      if (gallery.length === 0) {
+        gallery = getDeterministicGallery(id, 6);
+      }
       
       return {
         id,

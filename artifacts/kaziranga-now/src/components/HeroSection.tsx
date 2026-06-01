@@ -39,30 +39,7 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/40" />
       </div>
 
-      {/* Floating particles / fireflies effect */}
-      <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
-        {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 rounded-full bg-yellow-200/40"
-            style={{
-              left: `${10 + i * 12}%`,
-              top: `${30 + (i % 3) * 20}%`,
-            }}
-            animate={{
-              y: [0, -20, 0],
-              opacity: [0.2, 0.6, 0.2],
-              scale: [0.8, 1.2, 0.8],
-            }}
-            transition={{
-              duration: 3 + i * 0.5,
-              repeat: Infinity,
-              delay: i * 0.4,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-      </div>
+
 
       {/* Hero content — pushed toward top so bg rhino stays visible */}
       <div className="flex-1 flex items-start justify-center pt-24 md:pt-28 pb-16 relative z-10">
@@ -89,8 +66,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.15, ease: "easeOut" }}
-              className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white tracking-tight mb-2 leading-tight"
-              style={{ textShadow: "0 2px 4px rgba(0,0,0,0.6), 0 0 20px rgba(30,86,49,0.95), 0 0 10px rgba(30,86,49,0.85)" }}
+              className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold tracking-tight mb-2 leading-tight hero-title-main"
             >
               {isLoading ? "Kaziranga House" : (hero?.title || "Kaziranga House")}
             </motion.h1>
@@ -101,31 +77,17 @@ export default function HeroSection() {
                 initial={{ width: 0, opacity: 0 }}
                 animate={{ width: "96px", opacity: 1 }}
                 transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
-                className="h-[3px] bg-white/20 rounded-full overflow-hidden relative shadow-[0_0_8px_rgba(30,86,49,0.5)]"
-              >
-                <motion.div
-                  animate={{
-                    left: ["-100%", "100%"],
-                  }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 1.8,
-                    ease: "easeInOut",
-                  }}
-                  className="absolute top-0 bottom-0 w-1/2 bg-gradient-to-r from-transparent via-[#6fcf97] to-transparent z-10"
-                />
-                <div className="absolute inset-0 bg-[#1e5631] opacity-80 z-0" />
-              </motion.div>
+                className="h-[3px] w-24 rounded-full relative hero-title-underline"
+              />
             </div>
 
             <motion.p
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.6 }}
-              className="text-base md:text-lg text-white/85 font-medium max-w-xl mx-auto mb-6"
-              style={{ textShadow: "0 2px 4px rgba(0,0,0,0.8), 0 2px 10px rgba(0,0,0,0.5)" }}
+              className="hero-subtitle max-w-xl mx-auto mb-6"
             >
-              {isLoading ? "BEYOND LIMITS" : "BEYOND LIMITS"}
+              {isLoading ? "BEYOND LIMITS" : (hero?.subtitle || "BEYOND LIMITS")}
             </motion.p>
 
             <motion.div

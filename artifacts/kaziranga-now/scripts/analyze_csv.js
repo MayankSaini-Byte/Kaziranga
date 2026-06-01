@@ -58,6 +58,12 @@ async function run() {
   // Let's see some region values
   const regions = new Set(data.map(d => d["Region"]).filter(Boolean));
   console.log("Unique Regions:", Array.from(regions));
+
+  // Print non-empty Poster and Images rows
+  const withPoster = data.filter(d => d["Poster"] && d["Poster"].trim() !== "");
+  console.log("Rows with Poster:", withPoster);
+  const withImages = data.filter(d => d["Images"] && d["Images"].trim() !== "");
+  console.log("Rows with Images:", withImages);
 }
 
 run().catch(console.error);
