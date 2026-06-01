@@ -1,0 +1,184 @@
+{
+  "studyPortalUrl": "https://study.iitm.ac.in/",
+  "groups": [
+    {
+      "id": "foundation",
+      "name": "Foundation",
+      "levels": [
+        {
+          "id": "foundation-level-1",
+          "name": "Level 1",
+          "subjects": [
+            {
+              "id": "fl1-maths1",
+              "name": "Mathematics for Data Science I",
+              "materials": [
+                {
+                  "id": "mat-fl1-1",
+                  "title": "Week 1-4 Notes",
+                  "type": "pdf",
+                  "url": "https://drive.google.com/drive/placeholder",
+                  "uploadedBy": "Arjun Sharma",
+                  "date": "2026-03-10"
+                }
+              ]
+            },
+            {
+              "id": "fl1-stats1",
+              "name": "Statistics for Data Science I",
+              "materials": [
+                {
+                  "id": "mat-fl1-2",
+                  "title": "Probability Cheat Sheet",
+                  "type": "pdf",
+                  "url": "https://drive.google.com/drive/placeholder",
+                  "uploadedBy": "Priya Nair",
+                  "date": "2026-03-15"
+                }
+              ]
+            },
+            {
+              "id": "fl1-ct",
+              "name": "Computational Thinking",
+              "materials": []
+            },
+            {
+              "id": "fl1-english",
+              "name": "English I",
+              "materials": []
+            }
+          ]
+        },
+        {
+          "id": "foundation-level-2",
+          "name": "Level 2",
+          "subjects": [
+            {
+              "id": "fl2-maths2",
+              "name": "Mathematics for Data Science II",
+              "materials": [
+                {
+                  "id": "mat-fl2-1",
+                  "title": "Linear Algebra Notes",
+                  "type": "pdf",
+                  "url": "https://drive.google.com/drive/placeholder",
+                  "uploadedBy": "Rohan Das",
+                  "date": "2026-04-01"
+                }
+              ]
+            },
+            {
+              "id": "fl2-stats2",
+              "name": "Statistics for Data Science II",
+              "materials": []
+            },
+            {
+              "id": "fl2-python",
+              "name": "Programming in Python",
+              "materials": [
+                {
+                  "id": "mat-fl2-2",
+                  "title": "Python Quick Reference",
+                  "type": "link",
+                  "url": "https://docs.python.org/3/",
+                  "uploadedBy": "Sneha Patel",
+                  "date": "2026-04-05"
+                }
+              ]
+            },
+            {
+              "id": "fl2-english2",
+              "name": "English II",
+              "materials": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "diploma",
+      "name": "Diploma",
+      "levels": [
+        {
+          "id": "diploma-programming",
+          "name": "Programming",
+          "subjects": [
+            {
+              "id": "dp-dbms",
+              "name": "Database Management Systems",
+              "materials": [
+                {
+                  "id": "mat-dp-1",
+                  "title": "SQL Cheat Sheet",
+                  "type": "pdf",
+                  "url": "https://drive.google.com/drive/placeholder",
+                  "uploadedBy": "Vikram Reddy",
+                  "date": "2026-04-10"
+                }
+              ]
+            },
+            {
+              "id": "dp-pdsa",
+              "name": "Programming, Data Structures and Algorithms",
+              "materials": [
+                {
+                  "id": "mat-dp-2",
+                  "title": "Data Structures Flashcards",
+                  "type": "link",
+                  "url": "https://quizlet.com/placeholder",
+                  "uploadedBy": "Dev Kapoor",
+                  "date": "2026-04-12"
+                }
+              ]
+            },
+            {
+              "id": "dp-mad1",
+              "name": "Modern Application Development I",
+              "materials": []
+            },
+            {
+              "id": "dp-mad2",
+              "name": "Modern Application Development II",
+              "materials": []
+            }
+          ]
+        },
+        {
+          "id": "diploma-data-science",
+          "name": "Data Science",
+          "subjects": [
+            {
+              "id": "dds-ml",
+              "name": "Machine Learning Foundations",
+              "materials": [
+                {
+                  "id": "mat-dds-1",
+                  "title": "ML Algorithms Overview",
+                  "type": "pdf",
+                  "url": "https://drive.google.com/drive/placeholder",
+                  "uploadedBy": "Isha Bose",
+                  "date": "2026-04-18"
+                }
+              ]
+            },
+            {
+              "id": "dds-mlp",
+              "name": "Machine Learning Practice",
+              "materials": []
+            },
+            {
+              "id": "dds-ba",
+              "name": "Business Analytics",
+              "materials": []
+            },
+            {
+              "id": "dds-tools",
+              "name": "Tools in Data Science",
+              "materials": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "posts": [
+    {
+      "id": "blog-1",
+      "title": "Kaziranga First Meetup: A Night to Remember",
+      "author": "Rohan Das",
+      "date": "2026-03-25",
+      "category": "Meetup",
+      "excerpt": "We finally met in person! Here's a recap of our first ever Kaziranga House meetup, the laughs, the chai, and the conversations that went on until midnight.",
+      "content": "It was an evening none of us will forget. After months of chatting in the WhatsApp group, we finally saw each other's faces — and not just on a screen! The meetup was held at a local café, and what started as a small gathering quickly turned into a full-on Kaziranga reunion. Topics ranged from the IITM BS program to our favourite movies, future plans, and of course — who posts the most in the group.\n\nThe energy was electric. We laughed about our in-group memes, shared study tips, and a few brave souls even performed impromptu poetry. If this first meetup is any indication, Kaziranga House is just getting started.",
+      "tags": ["meetup", "community", "iitmbs"]
+    },
+    {
+      "id": "blog-2",
+      "title": "Movie Night Recap: Jungle Fever Edition",
+      "author": "Sneha Patel",
+      "date": "2026-04-10",
+      "category": "Movie Night",
+      "excerpt": "We watched three back-to-back jungle films and had very strong opinions. Here's what happened when Kaziranga House reviewed The Jungle Book, Baahubali, and RRR.",
+      "content": "Movie nights in Kaziranga are never just about movies. They're about the 47 opinions everyone has on every scene, the live commentary in the group chat, and the heated debates that follow.\n\nThis month's theme was 'Jungle & Nature' and we screened The Jungle Book, Baahubali (obviously), and RRR. Reactions were... intense. RRR won the crowd unanimously. Baahubali came second. And The Jungle Book sparked an unexpected philosophical debate about animal rights in cinema.\n\nOur next movie night is scheduled for May — theme TBD. Cast your vote in the group!",
+      "tags": ["movie night", "entertainment", "reviews"]
+    },
+    {
+      "id": "blog-3",
+      "title": "Kaziranga Tak: How It All Began",
+      "author": "Arjun Sharma",
+      "date": "2026-02-14",
+      "category": "Community",
+      "excerpt": "Two members, a recorder, and a lot of chai. The origin story of Kaziranga Tak — the podcast that records what happens inside our WhatsApp group.",
+      "content": "Kaziranga Tak started as a joke. 'What if we just recorded ourselves reacting to the group?' said one of us during a late-night call. Two weeks later, we had a mic, a script, and absolutely no idea what we were doing.\n\nThe premise is simple: every episode, two members of the Kaziranga House WhatsApp group sit down and talk about what's been happening — the memes, the debates, the announcements, the chaos. Think of it as a radio show for our little corner of the IITM BS universe.\n\nSince launching, we've recorded 8 episodes and the response has been incredible. If you haven't listened yet, check out our latest reel at the top of this page!",
+      "tags": ["kaziranga tak", "podcast", "origin story"]
+    }
+  ]
+}
