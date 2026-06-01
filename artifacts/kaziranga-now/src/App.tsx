@@ -11,7 +11,6 @@ import EventsPage from "@/pages/EventsPage";
 import CouncilPage from "@/pages/CouncilPage";
 import AarohanPage from "@/pages/ArohanPage";
 import RegionPage from "@/pages/RegionPage";
-import MeetupDetailPage from "@/pages/MeetupDetailPage";
 import BackgroundAudio from "@/components/BackgroundAudio";
 
 const queryClient = new QueryClient();
@@ -176,7 +175,6 @@ function Router() {
             <Route path="/aarohan"  component={AarohanPage} />
             <Route path="/meetups" component={GalleryPage} />
             <Route path="/gallery/meetups/:region" component={RegionPage} />
-            <Route path="/gallery/meetups/:region/:meetupId" component={MeetupDetailPage} />
             <Route                 component={NotFound} />
           </Switch>
         </motion.div>

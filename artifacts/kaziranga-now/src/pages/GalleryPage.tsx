@@ -32,9 +32,33 @@ const FOLDER_COLORS = [
   "bg-[#9b51e0] text-white", // purple
 ];
 
-function RegionFolder({ region, count, index }: { region: string; count: number; index: number }) {
+function RegionFolder({ 
+  region, 
+  count, 
+  index, 
+  images = [] 
+}: { 
+  region: string; 
+  count: number; 
+  index: number; 
+  images?: string[]; 
+}) {
   const color = FOLDER_COLORS[index % FOLDER_COLORS.length];
   const isDarkColor = color.includes("text-white");
+  
+  // High quality fallback/placeholder posters
+  const placeholders = [
+    "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80"
+  ];
+  
+  // Compile up to 3 images for the sheets inside the folder
+  const displayImages = [...images];
+  while (displayImages.length < 3) {
+    displayImages.push(placeholders[displayImages.length % placeholders.length]);
+  }
+  const sheetImages = displayImages.slice(0, 3);
   
   return (
     <Link href={`/gallery/meetups/${encodeURIComponent(region.toLowerCase())}`}>
@@ -45,9 +69,30 @@ function RegionFolder({ region, count, index }: { region: string; count: number;
         className="relative w-full aspect-[4/3] group cursor-pointer select-none mt-4"
       >
         {/* Back Flap & Tab */}
-        <div className="absolute inset-0 bg-[#e6dfcc] border-4 border-black rounded-xl shadow-[8px_8px_0_0_#000] group-hover:shadow-[14px_14px_0_0_#000] group-hover:-translate-y-2 transition-all duration-300">
+        <div className="absolute inset-0 bg-[#e6dfcc] border-4 border-black rounded-xl shadow-[8px_8px_0_0_#000] group-hover:shadow-[14px_14px_0_0_#000] group-hover:-translate-y-2 transition-all duration-300 z-0">
           {/* Tab */}
           <div className="absolute -top-[16px] left-4 h-[18px] w-24 bg-[#e6dfcc] border-t-4 border-x-4 border-black rounded-t-lg" />
+        </div>
+
+        {/* Sheet 3 (Backmost file) */}
+        <div 
+          className="absolute z-[1] left-[10%] top-[10%] w-[80%] h-[75%] border-2 border-black bg-white shadow-[2px_2px_0_0_#000] rounded-lg overflow-hidden transition-all duration-300 origin-bottom rotate-[-2deg] group-hover:-translate-y-8 group-hover:rotate-[-8deg]"
+        >
+          <img src={sheetImages[2]} alt="" className="w-full h-full object-cover" loading="lazy" />
+        </div>
+
+        {/* Sheet 2 (Middle file) */}
+        <div 
+          className="absolute z-[2] left-[10%] top-[10%] w-[80%] h-[75%] border-2 border-black bg-white shadow-[2px_2px_0_0_#000] rounded-lg overflow-hidden transition-all duration-300 origin-bottom rotate-[1deg] group-hover:-translate-y-14 group-hover:rotate-[5deg]"
+        >
+          <img src={sheetImages[1]} alt="" className="w-full h-full object-cover" loading="lazy" />
+        </div>
+
+        {/* Sheet 1 (Frontmost file) */}
+        <div 
+          className="absolute z-[3] left-[10%] top-[10%] w-[80%] h-[75%] border-2 border-black bg-white shadow-[2px_2px_0_0_#000] rounded-lg overflow-hidden transition-all duration-300 origin-bottom rotate-[-0.5deg] group-hover:-translate-y-20 group-hover:rotate-[-2deg]"
+        >
+          <img src={sheetImages[0]} alt="" className="w-full h-full object-cover" loading="lazy" />
         </div>
         
         {/* Front Flap */}
@@ -414,17 +459,25 @@ export default function GalleryPage() {
 
   // Group meetups by Region
   const groupedRegions = useMemo(() => {
-    const groups: Record<string, number> = {};
+    const groups: Record<string, { count: number; images: string[] }> = {};
     meetups.forEach((m) => {
-      const reg = m.region;
-      groups[reg] = (groups[reg] || 0) + 1;
+      const reg = m.region.trim().toUpperCase();
+      if (!reg) return;
+      if (!groups[reg]) {
+        groups[reg] = { count: 0, images: [] };
+      }
+      groups[reg].count += 1;
+      if (m.coverImage) {
+        groups[reg].images.push(m.coverImage);
+      }
     });
 
     return Object.keys(groups)
       .sort((a, b) => a.localeCompare(b))
       .map((reg) => ({
         name: reg,
-        count: groups[reg],
+        count: groups[reg].count,
+        images: groups[reg].images,
       }));
   }, [meetups]);
 
@@ -635,6 +688,7 @@ export default function GalleryPage() {
                         key={folder.name}
                         region={folder.name}
                         count={folder.count}
+                        images={folder.images}
                         index={index}
                       />
                     ))}
