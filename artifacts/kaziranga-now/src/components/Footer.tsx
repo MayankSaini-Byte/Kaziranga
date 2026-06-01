@@ -38,7 +38,7 @@ export default function Footer() {
             transition={{ duration: 0.5 }}
             className="w-14 h-14 rounded-2xl overflow-hidden border border-[#2e8b57]/40 bg-gradient-to-br from-white/10 to-transparent flex items-center justify-center p-1.5 mb-4 shadow-xl backdrop-blur-sm"
           >
-            <img src="/rhino-logo.png" alt="Kaziranga NOW" className="w-full h-full object-contain filter drop-shadow-lg" />
+            <img src="/logo.png" alt="Kaziranga NOW" className="w-full h-full object-contain filter drop-shadow-lg" />
           </motion.div>
 
           <motion.h2
